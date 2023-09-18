@@ -1,6 +1,15 @@
 # Importing required modules
+import os
+
 import discord
+from dotenv import load_dotenv
 
-client = discord.Client()
-client.run("MTE1MDgwMzMwMDI0MTkwMzc4Ng.Ged2ka.F9CNiwfbLKQZPsIpGO4v8KLPK-ZC0qzc-y7Po8")
+intents = discord.Intents.default()
+#intents.typing = False
+intents.presences = False
+intents.message_content = True
 
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
+client = discord.Client(intents=intents)
+client.run(TOKEN)

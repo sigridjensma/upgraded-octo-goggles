@@ -7,3 +7,5 @@ Commands:
 /play : voor het spelen van het spel
 /pass : voor het passen 
 /mep : voor het meppen
+
+hallo

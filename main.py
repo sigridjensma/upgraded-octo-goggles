@@ -110,7 +110,7 @@ def closingstage():
     kaart2computer = compkaarten[1]
     computertotal = kaart1computer + kaart2computer
     message.channel.send("De computer had als tweede kaart", kaart2computer, "en dus een totaal van", computertotal)
-    # hier moet de computer verder trekken (eventueel)
+    # hier moet de computer verder trekken (eventueel,)
 
 
 

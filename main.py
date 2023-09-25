@@ -25,10 +25,10 @@ async def on_ready():
     print("Jack Black is in " + str(guild_count) + " guilds.")
 
 
-#@client.event   # iedere hallo krijgt een hoi
-#async def on_message(message):
-#    if message.content.find("!hallo") != -1:
-#        await message.channel.send("Hoi")
+@client.event   # start van het spel, op het moment dat de user wil spelen
+async def on_message(message):
+    if message.content.find("/play") != -1:
+        await message.channel.send("oke, je wil met mij blackjacken")
 
 
 load_dotenv()

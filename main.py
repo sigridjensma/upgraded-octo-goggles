@@ -99,6 +99,23 @@ def round():
         ending = False
 
 
+def closingstage():
+    kaart1computer = compkaarten[0]
+    kaart2computer = compkaarten[1]
+    computertotal = kaart1computer + kaart2computer
+    if total > 21:
+        message.channnel.send("Helaas, je hebt verloren.")
+    # hier moet de computers kaart worden revealed
+    kaart1computer = compkaarten[0]
+    kaart2computer = compkaarten[1]
+    computertotal = kaart1computer + kaart2computer
+    message.channel.send("De computer had als tweede kaart", kaart2computer, "en dus een totaal van", computertotal)
+    # hier moet de computer verder trekken (eventueel)
+
+
+
+
+
 
 @client.event   # start van het spel, op het moment dat de user wil spelen
 async def on_message(message):
@@ -106,21 +123,11 @@ async def on_message(message):
         global spelactief
         if spelactief == True:
             return
-        await message.channel.send("oke, je wil met mij blackjacken")
-        await message.channel.send("Weet je hoe blackjacken werkt?")
-        message = message.content.lower() # ook als je geen hoofdletters gebruikt
-        if message == "nee":
-            spelactief = False # hier moet nog een invoercorrection over heen
-        elif message =="ja":
-            spelactief = True
         else:
-            message.channel.send("graag 'ja' of 'nee'")
-
-
-
-
-
-
+            await message.channel.send("oke, je wil met mij blackjacken")
+            init()
+            while ending == False:
+                round()
 
 
 

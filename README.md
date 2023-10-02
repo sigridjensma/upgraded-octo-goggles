@@ -12,5 +12,7 @@ moscow methode:
 must have: 
 De commands die hierboven staan aangegeven, werkende code. Iets dat ervoor zorgt dat er maar 1 spelletje tegelijk gespeelt kan worden
 should have: een 'wil je nog een keer spelen'
-could have: (een functie waar je met meer dan 1 speler kan spelen), of dat hij nog een ander spelletje kan spelen
+could have: (een functie waar je met meer dan 1 speler kan spelen), of dat hij nog een ander spelletje kan spelen, dat je een aas als 1 of 11 kan spelen
 won't have: functies buiten spelletjes spelen
+
+( 1 = computer, 2 = speler)

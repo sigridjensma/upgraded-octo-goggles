@@ -56,17 +56,17 @@ def init():  # begin van het spel
     global ending # het einde van het spel
     ending = False
     # N = 1
-    message.channel.send("De computer trekt eerst een kaart")
+    message.channel.send(f"De computer trekt eerst een kaart")
     kaart1computer = pickcard()
     kaart2computer = pickcard()
     compkaarten = [kaart1computer, kaart2computer]
-    message.channel.send("De eerste kaart van de computer is:", kaart1computer
+    message.channel.send(f"De eerste kaart van de computer is:", kaart1computer
     "/n De tweede kaart van de computer krijg je aan het einde van het spel te zien")
-    message.channel.send("Nu mag jij 2 kaarten trekken.")
+    message.channel.send(f"Nu mag jij 2 kaarten trekken.")
     kaart1speler = pickcard()
     kaart2speler = pickcard()
     total = kaart1speler + kaart2speler
-    message.channel.send("Je hebt een", kaart1speler, "getrokken, en je hebt een", kaart2speler,
+    message.channel.send(f"Je hebt een", kaart1speler, "getrokken, en je hebt een", kaart2speler,
                          "getrokken. \n Je totaal is nu", total)
     if total >= 21:
         ending = True
@@ -77,22 +77,22 @@ def init():  # begin van het spel
 def round():
     global total
     global ending
-    message.channel.send("Wil jij een nog een kaart?")
+    message.channel.send(f"Wil jij een nog een kaart?")
     message2 = message.content.lower()
     inputcorrection = False
     while inputcorrection == False:
-        message.channel.send("Wil jij een nog een kaart?")
+        message.channel.send(f"Wil jij een nog een kaart?")
         message2 = message.content.lower()
         if message2 == "ja":
             card = pickcard()
             total = total + card
-            message.channel.send("Jij hebt getrokken", card, "/n Je totaal is nu", total)
+            message.channel.send(f"Jij hebt getrokken", card, "/n Je totaal is nu", total)
             inputcorrection = True
         elif message2 == "nee":
-            message.channel.send("Oke.")
+            message.channel.send(f"Oke.")
             inputcorrection = True
         else:
-            message.channel.send("Beantwoord met ja of nee")
+            message.channel.send(f"Beantwoord met ja of nee")
     if total >= 21:
         ending = True
     else:
@@ -100,18 +100,46 @@ def round():
 
 
 def closingstage():
+    winnerchosen = False
     kaart1computer = compkaarten[0]
     kaart2computer = compkaarten[1]
     computertotal = kaart1computer + kaart2computer
-    if total > 21:
-        message.channnel.send("Helaas, je hebt verloren.")
-    # hier moet de computers kaart worden revealed
     kaart1computer = compkaarten[0]
     kaart2computer = compkaarten[1]
     computertotal = kaart1computer + kaart2computer
-    message.channel.send("De computer had als tweede kaart", kaart2computer, "en dus een totaal van", computertotal)
-    # hier moet de computer verder trekken (eventueel,)
+    message.channel.send(f"De computer had als tweede kaart", kaart2computer, "en dus een totaal van", computertotal)
 
+    while computertotal < 17:
+        computerkaart = pickcard()
+        computertotal = computertotal + computerkaart
+    message.channel.send(f"De computer heeft nu als totaal:", computertotal)
+    if total > 21:
+        winner = 1
+        message.channel.send(f"Je hebt verloren, je had hoger dan 21")
+        winnerchosen = True
+    if computertotal > 21:
+        winner = 2
+        message.channel.send(f"Je hebt gewonnen, want de computer had hoger dan 21")
+        winnerchosen = True
+    if total == 21:
+        if computertotal == 21:
+            winner = 1
+            message.channel.send(f"De computer heeft gewonnen, want hij had een totaal van 21")
+            winnerchosen = True
+        else:
+            winner = 2
+            message.channel.send(f"Jij hebt gewonnen, want je had 21 en de computer niet")
+            winnerchosen = True
+    while winnerchosen == False:
+        if computertotal > total:
+            winner = 1
+        if total > computertotal:
+            winner = 2
+
+    if winner = 2:
+        message.channel.send(f"Gefeliciteerd, je hebt gewonnen")
+    if winner = 1:
+        message.channel.send(f"Jammer, je hebt verloren.")
 
 
 
@@ -128,6 +156,7 @@ async def on_message(message):
             init()
             while ending == False:
                 round()
+
 
 
 

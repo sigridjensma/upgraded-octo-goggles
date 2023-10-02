@@ -1,9 +1,9 @@
 # Importing required modules
+from dotenv import load_dotenv
 import os
 import discord
 import random
 global repeat
-from dotenv import load_dotenv
 
 
 intents = discord.Intents.default()
@@ -53,15 +53,15 @@ def init():  # begin van het spel
     # global N
     global total  # het totaal van users kaarten
     global compkaarten  # het totaal van de computers kaarten
-    global ending # het einde van het spel
+    global ending   # het einde van het spel
     ending = False
     # N = 1
     message.channel.send(f"De computer trekt eerst een kaart")
     kaart1computer = pickcard()
     kaart2computer = pickcard()
     compkaarten = [kaart1computer, kaart2computer]
-    message.channel.send(f"De eerste kaart van de computer is:", kaart1computer
-    "/n De tweede kaart van de computer krijg je aan het einde van het spel te zien")
+    message.channel.send("De eerste kaart van de computer is:", kaart1computer)
+    message.channel.send("/n De tweede kaart van de computer krijg je aan het einde van het spel te zien")
     message.channel.send(f"Nu mag jij 2 kaarten trekken.")
     kaart1speler = pickcard()
     kaart2speler = pickcard()
@@ -80,7 +80,7 @@ def round():
     message.channel.send(f"Wil jij een nog een kaart?")
     message2 = message.content.lower()
     inputcorrection = False
-    while inputcorrection == False:
+    while inputcorrection is False:
         message.channel.send(f"Wil jij een nog een kaart?")
         message2 = message.content.lower()
         if message2 == "ja":
@@ -129,37 +129,34 @@ def closingstage():
             winner = 2
             message.channel.send(f"Jij hebt gewonnen, want je had 21 en de computer niet")
             winnerchosen = True
-    while winnerchosen == False:
+    while winnerchosen is False:
         if computertotal > total:
             winner = 1
         if total > computertotal:
             winner = 2
-    if winner = 2:
+    if winner == 2:
         message.channel.send(f"Gefeliciteerd, je hebt gewonnen")
-    if winner = 1:
+    if winner == 1:
         message.channel.send(f"Jammer, je hebt verloren.")
-
-
-
 
 
 @client.event   # start van het spel, op het moment dat de user wil spelen
 async def on_message(message):
     if message.content.startswith("/play") != -1:
         repeat = True
-        while repeat == True:
+        while repeat is True:
             global spelactief
-            if spelactief == True:
+            if spelactief is True:
                 return
             else:
                 await message.channel.send(f"oke, je wil met mij blackjacken")
                 init()
-                while ending == False:
+                while ending is False:
                     round()
                 closingstage()
                 repeat = False
                 message.channel.send(f"Wil je nog een keer spelen?")
-                #insert communicatie + invoercorrectie
+                # insert communicatie + invoercorrectie
                 if answer1 == "ja":
                     repeat = True
                 elif answer1 == "nee":
@@ -167,9 +164,6 @@ async def on_message(message):
                 else:
                     message.channel.send(f"graag ja of nee")
                 spelactief = False
-
-
-
 
 
 load_dotenv()

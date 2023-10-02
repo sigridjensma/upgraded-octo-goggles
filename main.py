@@ -108,7 +108,6 @@ def closingstage():
     kaart2computer = compkaarten[1]
     computertotal = kaart1computer + kaart2computer
     message.channel.send(f"De computer had als tweede kaart", kaart2computer, "en dus een totaal van", computertotal)
-
     while computertotal < 17:
         computerkaart = pickcard()
         computertotal = computertotal + computerkaart
@@ -135,7 +134,6 @@ def closingstage():
             winner = 1
         if total > computertotal:
             winner = 2
-
     if winner = 2:
         message.channel.send(f"Gefeliciteerd, je hebt gewonnen")
     if winner = 1:
@@ -148,14 +146,27 @@ def closingstage():
 @client.event   # start van het spel, op het moment dat de user wil spelen
 async def on_message(message):
     if message.content.startswith("/play") != -1:
-        global spelactief
-        if spelactief == True:
-            return
-        else:
-            await message.channel.send("oke, je wil met mij blackjacken")
-            init()
-            while ending == False:
-                round()
+        repeat = True
+        while repeat == True:
+            global spelactief
+            if spelactief == True:
+                return
+            else:
+                await message.channel.send(f"oke, je wil met mij blackjacken")
+                init()
+                while ending == False:
+                    round()
+                closingstage()
+                repeat = False
+                message.channel.send(f"Wil je nog een keer spelen?")
+                #insert communicatie + invoercorrectie
+                if answer1 == "ja":
+                    repeat = True
+                elif answer1 == "nee":
+                    repeat = False
+                else:
+                    message.channel.send(f"graag ja of nee")
+                spelactief = False
 
 
 

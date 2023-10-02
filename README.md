@@ -18,6 +18,7 @@ should have:
 - invoercorrectie
 - dat het niet uitmaakt of je hoofdletters of niet gebruikt
 - een beschrijving hoe je hem to moet voegen aan je discord server
+- 
 could have: 
 - (een functie waar je met meer dan 1 speler kan spelen) 
 - of dat hij nog een ander spelletje kan spelen,

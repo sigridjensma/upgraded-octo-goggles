@@ -6,6 +6,7 @@ import random
 global repeat
 
 
+
 intents = discord.Intents.default()
 # intents.typing = False
 intents.presences = False
@@ -16,6 +17,7 @@ client = discord.Client(intents=intents)
 @client.event   # iedere message die wordt gestuurd wordt naar de console gestuurd, ter controle
 async def on_message(message):
     print(message.content)
+    await message.channel.send("Fuck ha")
 
 
 @client.event   # guild count (in hoeveel guilds zit deze bot)
@@ -78,7 +80,7 @@ def round():
     global total
     global ending
     message.channel.send(f"Wil jij een nog een kaart?")
-    message2 = message.content.lower()
+    message2 = message.content.lower() #communicatie
     inputcorrection = False
     while inputcorrection is False:
         message.channel.send(f"Wil jij een nog een kaart?")
@@ -101,6 +103,7 @@ def round():
 
 def closingstage():
     winnerchosen = False
+    global computertotal
     kaart1computer = compkaarten[0]
     kaart2computer = compkaarten[1]
     computertotal = kaart1computer + kaart2computer

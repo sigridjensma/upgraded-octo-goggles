@@ -13,6 +13,7 @@ must have:
 - De commands die hierboven staan aangegeven moeten werken
 - een manier om te reageren op de commands
 - Een goed profile om te laten zien waar deze discord bot voor is 
+- Werkende communicatie
 should have: 
 - een 'wil je nog een keer spelen functie'
 - invoercorrectie

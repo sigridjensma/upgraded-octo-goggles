@@ -169,6 +169,27 @@ async def on_message(message):
                 spelactief = False
 
 
+@client.event
+async def on_message(message):
+    if message.content.startswith("/play") !=-1
+        global spelactive
+        repeat = True
+        while repeat is True:
+            if spelactive is True:
+                return
+        else:
+            await message.channel.send("Oke, je wilt blackjacken.")
+            #init
+            while ending is false:
+                #round
+            #closingstage
+            repeat = False
+            message.channel.send("Wil je nog een potje spelen?")
+            #communicatie en invoercorrectie
+            #repeat als speler dat wil.
+
+
+
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 client.run(TOKEN)

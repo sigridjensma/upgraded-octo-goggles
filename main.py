@@ -165,14 +165,14 @@ def pickcard():
 #                 else:
 #                     message.channel.send(f"graag ja of nee")
 #                 spelactief = False
-@client.event
-async def on_message(message):
-    print(message.content)
 
 
 @client.event
 async def on_message(message):
-    if message.content.startswith("/play"):
+    if message.author == client.user:
+        return
+    msg = message.content
+    if msg.startswith("/play"):
         global spelactive
         spelactive = False
         repeat = True
@@ -197,43 +197,42 @@ async def on_message(message):
                         11, 11, 11, 11]  # de aas
                 # global N
                 global total  # het totaal van users kaarten
-                global compkaarten  # het totaal van de computers kaarten
+                global compkcards  # het totaal van de computers kaarten
                 global ending  # het einde van het spel
                 ending = False
                 # N = 1
-                message.channel.send("De computer trekt eerst een kaart")
-                kaart1computer = pickcard()
-                kaart2computer = pickcard()
-                compkaarten = [kaart1computer, kaart2computer]
-                message.channel.send("De eerste kaart van de computer is:", kaart1computer)
-                message.channel.send("De tweede kaart van de computer krijg je aan het einde van het spel te zien")
-                message.channel.send("Nu mag jij 2 kaarten trekken.")
-                kaart1speler = pickcard()
-                kaart2speler = pickcard()
-                total = kaart1speler + kaart2speler
-                message.channel.send(f"Je hebt een", {kaart1speler}, "getrokken, en je hebt een", {kaart2speler},
+                await message.channel.send("De computer trekt eerst een kaart")
+                card1computer = pickcard()
+                card2computer = pickcard()
+                compcards = [card1computer, card2computer]
+                await message.channel.send("De eerste kaart van de computer is:", card1computer)
+                await message.channel.send("De tweede kaart van de computer krijg je aan het einde van het spel te zien")
+                await message.channel.send("Nu mag jij 2 kaarten trekken.")
+                card1player = pickcard()
+                card2player = pickcard()
+                total = card1player + card2player
+                await message.channel.send(f"Je hebt een", {card1player}, "getrokken, en je hebt een", {card2player},
                                      "getrokken. \n Je totaal is nu", {total})
                 if total >= 21:
                         ending = True
                 else:
                     ending = False
                 while ending is False:
-                    message.channel.send(f"Wil jij een nog een kaart?")
+                    await message.channel.send(f"Wil jij een nog een kaart?")
                     message3 = message.content.lower()  # communicatie
                     goodinput = False
                     while goodinput is False:
-                        message.channel.send(f"Wil jij een nog een kaart?")
-                        message3 = message.content.lower()
+                        await message.channel.send(f"Wil jij een nog een kaart?")
                         if message3 == "ja":
                             card = pickcard()
                             total = total + card
-                            message.channel.send(f"Jij hebt getrokken", card, "/n Je totaal is nu", total)
+                            await message.channel.send(f"Jij hebt getrokken", card, "/n Je totaal is nu", total)
                             goodinput = True
                         elif message3 == "nee":
-                            message.channel.send("Oke.")
+                            await message.channel.send("Oke.")
                             goodinput = True
                         else:
-                            message.channel.send("Beantwoord met ja of nee")
+                            await message.channel.send("Beantwoord met ja of nee")
                             goodinput = False
                     if total >= 21:
                         ending = True
@@ -241,34 +240,31 @@ async def on_message(message):
                         ending = False
                     winnerchosen = False
                     global computertotal
-                    kaart1computer = compkaarten[0]
-                    kaart2computer = compkaarten[1]
-                    computertotal = kaart1computer + kaart2computer
-                    kaart1computer = compkaarten[0]
-                    kaart2computer = compkaarten[1]
-                    computertotal = kaart1computer + kaart2computer
-                    message.channel.send(f"De computer had als tweede kaart", {kaart2computer}, "en dus een totaal van",
+                    card1computer = compcards[0]
+                    card2computer = compcards[1]
+                    computertotal = card1computer + card2computer
+                    await message.channel.send(f"De computer had als tweede kaart", {card2computer}, "en dus een totaal van",
                                          {computertotal})
                     while computertotal < 17:
-                        computerkaart = pickcard()
-                        computertotal = computertotal + computerkaart
-                    message.channel.send("De computer heeft nu als totaal:", {computertotal})
+                        computercard = pickcard()
+                        computertotal = computertotal + computercard
+                    await message.channel.send("De computer heeft nu als totaal:", {computertotal})
                     if total > 21:
                         winner = 1
-                        message.channel.send("Je hebt verloren, je had hoger dan 21")
+                        await message.channel.send("Je hebt verloren, je had hoger dan 21")
                         winnerchosen = True
                     if computertotal > 21:
                         winner = 2
-                        message.channel.send("Je hebt gewonnen, want de computer had hoger dan 21")
+                        await message.channel.send("Je hebt gewonnen, want de computer had hoger dan 21")
                         winnerchosen = True
                     if total == 21:
                         if computertotal == 21:
                             winner = 1
-                            message.channel.send("De computer heeft gewonnen, want hij had een totaal van 21")
+                            await message.channel.send("De computer heeft gewonnen, want hij had een totaal van 21")
                             winnerchosen = True
                         else:
                             winner = 2
-                            message.channel.send("Jij hebt gewonnen, want je had 21 en de computer niet")
+                            await message.channel.send("Jij hebt gewonnen, want je had 21 en de computer niet")
                             winnerchosen = True
                     while winnerchosen is False:
                         if computertotal > total:
@@ -276,11 +272,11 @@ async def on_message(message):
                         if total > computertotal:
                             winner = 2
                     if winner == 2:
-                        message.channel.send("Gefeliciteerd, je hebt gewonnen")
+                        await message.channel.send("Gefeliciteerd, je hebt gewonnen")
                     if winner == 1:
-                        message.channel.send("Jammer, je hebt verloren.")
+                        await message.channel.send("Jammer, je hebt verloren.")
                     repeat = False
-                    message.channel.send("Wil je nog een potje spelen? ja of nee")
+                    await message.channel.send("Wil je nog een potje spelen? ja of nee")
                     message2 = message.content.lower
                     goodinput = False
                     while goodinput is False:
@@ -289,16 +285,14 @@ async def on_message(message):
                             goodinput = True
                         elif message2 == "nee":
                             repeat = False
-                            message.channel.send("Tot ziens")
+                            await message.channel.send("Tot ziens")
                             goodinput = True
                         else:
-                            message.channel.send("'ja' of 'nee' alsjeblieft.")
+                            await message.channel.send("'ja' of 'nee' alsjeblieft.")
                             goodinput = False
                 spelactive = False
             else:
                 return
-    else:
-        return
 
 
             # communicatie

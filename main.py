@@ -293,8 +293,7 @@ async def on_message(message):
                 spelactive = False
             else:
                 return
-
-
+.
             # communicatie
             # repeat als speler dat wil.
 

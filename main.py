@@ -205,14 +205,14 @@ async def on_message(message):
                 card1computer = pickcard()
                 card2computer = pickcard()
                 compcards = [card1computer, card2computer]
-                await message.channel.send("De eerste kaart van de computer is:", card1computer)
+                await message.channel.send(f"De eerste kaart van de computer is: {card1computer}")
                 await message.channel.send("De tweede kaart van de computer krijg je aan het einde van het spel te zien")
                 await message.channel.send("Nu mag jij 2 kaarten trekken.")
                 card1player = pickcard()
                 card2player = pickcard()
                 total = card1player + card2player
-                await message.channel.send(f"Je hebt een", {card1player}, "getrokken, en je hebt een", {card2player},
-                                     "getrokken. \n Je totaal is nu", {total})
+                await message.channel.send(f"Je hebt een {card1player} getrokken, en je hebt een {card2player} "+
+                                           f"getrokken. \n Je totaal is nu {total}")
                 if total >= 21:
                         ending = True
                 else:
@@ -293,7 +293,8 @@ async def on_message(message):
                 spelactive = False
             else:
                 return
-.
+
+
             # communicatie
             # repeat als speler dat wil.
 

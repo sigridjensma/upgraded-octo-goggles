@@ -207,23 +207,23 @@ async def on_message(message):
                 compcards = [card1computer, card2computer]
                 await message.channel.send(f"De eerste kaart van de computer is: {card1computer}")
                 await message.channel.send(f"De tweede kaart van de computer krijg je aan het einde van het" +
-                                           f"spel te zien")
+                                           f" spel te zien")
                 await message.channel.send(f"Nu mag jij 2 kaarten trekken.")
                 card1player = pickcard()
                 card2player = pickcard()
                 total = card1player + card2player
                 await message.channel.send(f"Je hebt een {card1player} getrokken, en je hebt een {card2player} " +
-                                           f"getrokken. \n Je totaal is nu {total}")
+                                           f"getrokken.\n Je totaal is nu {total}")
                 if total >= 21:
                     ending = True
                 else:
                     ending = False
                 while ending is False:
-                    await message.channel.send(f"Wil jij een nog een kaart?")
+                    await message.channel.send(f"Wil jij nog een kaart?")
                     message3 = message.content.lower()  # communicatie
                     goodinput = False
                     while goodinput is False:
-                        await message.channel.send(f"Wil jij een nog een kaart?")
+                        # await message.channel.send(f"Wil jij een nog een kaart?")
                         if message3 == "ja":
                             card = pickcard()
                             total = total + card

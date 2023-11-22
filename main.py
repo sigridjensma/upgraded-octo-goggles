@@ -1,4 +1,5 @@
 # Importing required modules
+from discord.ext.commands import bot
 from dotenv import load_dotenv
 import os
 import discord
@@ -174,13 +175,13 @@ async def on_message(message):
         return
     msg = message.content
     if msg.startswith("/play"):
-        global spelactive
-        spelactive = False
+        global gameactive
+        gameactive = False
         repeat = True
         while repeat is True:
-            if spelactive is True:
+            if gameactive is True:
                 return
-            elif spelactive is False:
+            elif gameactive is False:
                 await message.channel.send(f"Oke {message.author}, je wilt blackjacken.")
                 global deck  # zo kan je geen dubbele kaarten trekken
                 deck = [2, 2, 2, 2,
@@ -226,9 +227,10 @@ async def on_message(message):
                     ending = False
                 while ending is False:
                     time.sleep(1)
-                    await message.channel.send(f"Wil jij nog een kaart?")
-                    takingcard = message.content.lower()  # communicatie
+                    await message.channel.send(f"Wil jij nog een kaart?") # probleem is dat hij de message waar hij de content uit haalt niet verandert
+                    # takingcard = message.content.lower()  # communicatie
                     goodinput = False
+                    takingcard = await bot.wait_for_message(author=message.author)
                     while goodinput is False:
                         print(message.content)
                         # await message.channel.send(f"Wil jij een nog een kaart?")
@@ -313,7 +315,7 @@ async def on_message(message):
                             time.sleep(1)
                             await message.channel.send(f"'ja' of 'nee' alsjeblieft.")
                             goodinput = False
-                spelactive = False
+                gameactive = False
             else:
                 return
 

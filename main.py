@@ -181,7 +181,7 @@ async def on_message(message):
             if spelactive is True:
                 return
             elif spelactive is False:
-                await message.channel.send("Oke, je wilt blackjacken.")
+                await message.channel.send(f"Oke {message.author}, je wilt blackjacken.")
                 global deck  # zo kan je geen dubbele kaarten trekken
                 deck = [2, 2, 2, 2,
                         3, 3, 3, 3,
@@ -219,7 +219,7 @@ async def on_message(message):
                 total = card1player + card2player
                 time.sleep(1)
                 await message.channel.send(f"Je hebt een {card1player} getrokken, en je hebt een {card2player} " +
-                                           f"getrokken.\n Je totaal is nu {total}")
+                                           f"getrokken.\nJe totaal is nu {total}")
                 if total >= 21:
                     ending = True
                 else:
@@ -227,17 +227,18 @@ async def on_message(message):
                 while ending is False:
                     time.sleep(1)
                     await message.channel.send(f"Wil jij nog een kaart?")
-                    message3 = message.content.lower()  # communicatie
+                    takingcard = message.content.lower()  # communicatie
                     goodinput = False
                     while goodinput is False:
+                        print(message.content)
                         # await message.channel.send(f"Wil jij een nog een kaart?")
-                        if message3 == "ja":
+                        if takingcard == "ja":
                             card = pickcard()
                             total = total + card
                             time.sleep(1)
                             await message.channel.send(f"Jij hebt getrokken {card} /n Je totaal is nu {total}")
                             goodinput = True
-                        elif message3 == "nee":
+                        elif takingcard == "nee":
                             await message.channel.send(f"Oke.")
                             goodinput = True
                         else:
@@ -323,4 +324,3 @@ async def on_message(message):
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 client.run(TOKEN)
-..

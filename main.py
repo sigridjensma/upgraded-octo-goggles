@@ -5,7 +5,9 @@ import os
 import discord
 import random
 import time
-global repeat
+
+
+# global repeat
 
 
 intents = discord.Intents.default()
@@ -178,10 +180,11 @@ async def on_message(message):
         global gameactive
         gameactive = False
         repeat = True
-        while repeat is True: # this is here, in case the feature to play the game again is added
-            if gameactive is True:
+        while repeat is True:  # this is here, in case the feature to play the game again is added
+            if gameactive is True:  # fix being able to play to games at a time
                 return
             elif gameactive is False:
+                # this line is the correct line for the game
                 await message.channel.send(f"Oke {message.author}, je wilt blackjacken.")
                 global deck  # unables you to take double cards
                 deck = [2, 2, 2, 2,
@@ -197,14 +200,12 @@ async def on_message(message):
                         10, 10, 10, 10,  # de vrouw
                         10, 10, 10, 10,  # de koning
                         11, 11, 11, 11]  # de aas
-
-
-                global total # total of users cards
+                global total  # total of users cards
                 global compcards  # total of the computer's cards
                 global ending  # enables the ending stage of the game
                 ending = False
                 # N = 1
-                time.sleep(1) # prevents the bot spamming messages
+                time.sleep(1)  # prevents the bot spamming messages
                 await message.channel.send(f"De computer trekt eerst een kaart")
                 card1computer = pickcard()
                 card2computer = pickcard()
@@ -226,99 +227,102 @@ async def on_message(message):
                     ending = True
                 else:
                     ending = False
-
-
                 while ending is False:
                     time.sleep(1)
-                    await message.channel.send(f"Wil jij nog een kaart?") # problem is it nog changing the input in comparison to the start
+                    await message.channel.send(f"Wil jij nog een kaart?")  # problem is it nog changing the input in comparison to the start
                     goodinput = False
-                    takingcard = await bot.wait_for_message(author=message.author)
-                    while goodinput is False: # checking the input
+                    takingcard = await bot.wait_for_message(author=message.author)  # fix issue with waitformessage function
+                    while goodinput is False:  # checking the input
                         print(message.content)
-                        if takingcard == "ja": # if answer is yes
+                        if takingcard == "ja":  # if answer is yes
                             card = pickcard()
                             total = total + card
                             time.sleep(1)
                             await message.channel.send(f"Jij hebt getrokken {card} /n Je totaal is nu {total}")
                             goodinput = True
-                        elif takingcard == "nee": # if answer is no
+                        elif takingcard == "nee":  # if answer is no
                             await message.channel.send(f"Oke.")
                             goodinput = True
-                        else: # if answer is nor 'yes' or 'no'
+                        else:  # if answer is nor 'yes' or 'no'
                             time.sleep(1)
                             await message.channel.send(f"Beantwoord met ja of nee")
                             time.sleep(3)
                             goodinput = False
-                    if total >= 21: # if user has 21, game goes to endingstage
+                    if total >= 21:  # if user has 21, game goes to endingstage
                         ending = True
                     else:
                         ending = False
-
-
-                    # everything under here needs to get out of the 'if ending is false' loop
-                    winnerchosen = False
-                    global computertotal # same as earlier
-                    card1computer = compcards[0] # getting the cards out of the list made earlier
-                    card2computer = compcards[1]
-                    computertotal = card1computer + card2computer
+                # starting ending phase
+                winnerchosen = False
+                global computertotal  # same as earlier
+                global winner
+                card1computer = compcards[0]  # getting the cards out of the list made earlier
+                card2computer = compcards[1]
+                computertotal = card1computer + card2computer
+                time.sleep(1)
+                await message.channel.send(f"De computer had als tweede kaart {card2computer} en dus een totaal" +
+                                           f"van {computertotal}")  # reveal computer's total
+                while computertotal < 17:  # if computertotal is smaller than 17, it gets to draw more cards
+                    computercard = pickcard()
+                    computertotal = computertotal + computercard
+                time.sleep(1)
+                await message.channel.send(f"De computer heeft nu als totaal: {computertotal}")
+                if total > 21:  # if player's total is bigger than 21 = instant lose
+                    winner = 1  # 1 is computer
                     time.sleep(1)
-                    await message.channel.send(f"De computer had als tweede kaart {card2computer} en dus een totaal" +
-                                               f"van {computertotal}")
-                    while computertotal < 17:
-                        computercard = pickcard()
-                        computertotal = computertotal + computercard
+                    await message.channel.send(f"Je had hoger dan 21")
+                    winnerchosen = True
+                if computertotal > 21:  # if the computer has more than 21, you win
+                    if total > 21:  # except if you also got 21, then the computer wins.
+                        winner = 1  # computer
+                        await message.channel.send("De computer had 21, maar jij ook.")
+                    else:
+                        winner = 2  # player
+                        await message.channel.send("De computer had 21.")
                     time.sleep(1)
-                    await message.channel.send(f"De computer heeft nu als totaal: {computertotal}")
-                    if total > 21:
+                    winnerchosen = True
+                if total == 21:  # if you had a total of 21
+                    if computertotal == 21:  # if the computer also had 21, you lose
                         winner = 1
                         time.sleep(1)
-                        await message.channel.send(f"Je hebt verloren, je had hoger dan 21")
+                        await message.channel.send(f"De computer had een totaal van 21")
                         winnerchosen = True
-                    if computertotal > 21:
+                    else:  # if you had 21 and the computer too, you lose
                         winner = 2
                         time.sleep(1)
-                        await message.channel.send(f"Je hebt gewonnen, want de computer had hoger dan 21")
+                        await message.channel.send(f"Je had 21 en de computer niet")
                         winnerchosen = True
-                    if total == 21:
-                        if computertotal == 21:
-                            winner = 1
-                            time.sleep(1)
-                            await message.channel.send(f"De computer heeft gewonnen, want hij had een totaal van 21")
-                            winnerchosen = True
-                        else:
-                            winner = 2
-                            time.sleep(1)
-                            await message.channel.send(f"Jij hebt gewonnen, want je had 21 en de computer niet")
-                            winnerchosen = True
-                    while winnerchosen is False:
-                        if computertotal > total:
-                            winner = 1
-                        if total > computertotal:
-                            winner = 2
-                    if winner == 2:
-                        time.sleep (1)
-                        await message.channel.send(f"Gefeliciteerd, je hebt gewonnen")
-                    if winner == 1:
-                        time.sleep(1)
-                        await message.channel.send(f"Jammer, je hebt verloren.")
-                    repeat = False
+                if winnerchosen is False:
+                    if computertotal > total:
+                        winner = 1  # computer
+                        winnerchosen = True
+                    if total > computertotal:
+                        winner = 2  # player
+                        winnerchosen = True
+                if winner == 2:  # player is winner
                     time.sleep(1)
-                    await message.channel.send(f"Wil je nog een potje spelen? ja of nee")
-                    message2 = message.content.lower
-                    goodinput = False
-                    while goodinput is False:
-                        if message2 == "ja":
-                            repeat = True
-                            goodinput = True
-                        elif message2 == "nee":
-                            repeat = False
-                            time.sleep(1)
-                            await message.channel.send(f"Tot ziens")
-                            goodinput = True
-                        else:
-                            time.sleep(1)
-                            await message.channel.send(f"'ja' of 'nee' alsjeblieft.")
-                            goodinput = False
+                    await message.channel.send(f"Gefeliciteerd, je hebt gewonnen")
+                if winner == 1:  # computer is winner
+                    time.sleep(1)
+                    await message.channel.send(f"Jammer, je hebt verloren.")
+                repeat = False
+                time.sleep(1)
+                # await message.channel.send(f"Wil je nog een potje spelen? ja of nee") # start of repeat function inactive for now
+                # message2 = message.content.lower
+                # goodinput = False
+                # while goodinput is False:
+                #     if message2 == "ja":
+                #         repeat = True
+                #         goodinput = True
+                #     elif message2 == "nee":
+                #         repeat = False
+                #         time.sleep(1)
+                #         await message.channel.send(f"Tot ziens")
+                #         goodinput = True
+                #     else:
+                #         time.sleep(1)
+                #         await message.channel.send(f"'ja' of 'nee' alsjeblieft.")
+                #         goodinput = False
                 gameactive = False
             else:
                 return

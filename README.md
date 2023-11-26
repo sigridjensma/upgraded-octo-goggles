@@ -5,6 +5,8 @@ This is a bot, with whom you can play blackjack. He has a suitable name: Jack Bl
 Commands:
 /play : voor het spelen van het spel
 
+How does Jack Black work?
+
 How do you add Jack Black to your server?
 
 

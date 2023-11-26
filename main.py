@@ -7,7 +7,7 @@ import random
 import time
 
 
-# global repeat #  deze hoeft alleen maar als de repeat functie later genoemd wordt gebruikt.
+# global repeat #  deze hoeft alleen maar als de repeat functie later wordt gebruikt.
 
 
 intents = discord.Intents.default()
@@ -17,7 +17,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 
-# functie voor het bekijken of de bot werkt.
+# functie om te bekijken of de bot werkt.
 # @client.event   # iedere message die wordt gestuurd wordt naar de console gestuurd, ter controle
 # async def on_message(message):
 #     print(message.content)
@@ -50,7 +50,7 @@ async def on_message(message):
         gameactive = False
         repeat = True
         while repeat is True:  # this is here, in case the feature to play the game again is added
-            if gameactive is True:  # fix being able to play to games at a time
+            if gameactive is True:  # fix being able to play two games at the same time
                 return
             elif gameactive is False:
                 # this line is the correct line for the game

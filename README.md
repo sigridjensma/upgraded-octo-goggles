@@ -1,12 +1,12 @@
 # upgraded-octo-goggles
-eindproduct qhigh python +
-
-Een discord-bot die kan 'Blackjacken'. (Zijn naam is Jack Black)
+This is my project for a module called Python+.
+This is a bot, with whom you can play blackjack. He has a suitable name: Jack Black. 
 
 Commands:
 /play : voor het spelen van het spel
-/pass : voor het passen 
-/mep : voor het meppen
+
+How do you add Jack Black to your server?
+
 
 moscow methode:
 must have: 

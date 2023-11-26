@@ -23,7 +23,7 @@ client = discord.Client(intents=intents)
 #     print(message.content)
 
 
-@client.event   # guild count (in hoeveel guilds zit deze bot)
+@client.event   # guild count
 async def on_ready():
     guild_count = 0
     for guild in client.guilds:
@@ -32,11 +32,11 @@ async def on_ready():
     print("Jack Black is in " + str(guild_count) + " guilds.")
 
 
-def pickcard(): # functie om kaart te kiezen.
+def pickcard(): # function to draw cards.
     global deck
     x = random.randint(0, (len(deck) - 1))
     card = deck[x]
-    deck.pop(x) # dit zorgt ervoor dat je niet 2 keer dezelfde kaart kan pakken.
+    deck.pop(x) # prevents drawing the same card twice
     return card
 
 

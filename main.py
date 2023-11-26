@@ -178,12 +178,12 @@ async def on_message(message):
         global gameactive
         gameactive = False
         repeat = True
-        while repeat is True:
+        while repeat is True: # this is here, in case the feature to play the game again is added
             if gameactive is True:
                 return
             elif gameactive is False:
                 await message.channel.send(f"Oke {message.author}, je wilt blackjacken.")
-                global deck  # zo kan je geen dubbele kaarten trekken
+                global deck  # unables you to take double cards
                 deck = [2, 2, 2, 2,
                         3, 3, 3, 3,
                         4, 4, 4, 4,
@@ -197,13 +197,14 @@ async def on_message(message):
                         10, 10, 10, 10,  # de vrouw
                         10, 10, 10, 10,  # de koning
                         11, 11, 11, 11]  # de aas
-                # global N
-                global total  # het totaal van users kaarten
-                global compkcards  # het totaal van de computers kaarten
-                global ending  # het einde van het spel
+
+
+                global total # total of users cards
+                global compcards  # total of the computer's cards
+                global ending  # enables the ending stage of the game
                 ending = False
                 # N = 1
-                time.sleep(1)
+                time.sleep(1) # prevents the bot spamming messages
                 await message.channel.send(f"De computer trekt eerst een kaart")
                 card1computer = pickcard()
                 card2computer = pickcard()
@@ -225,36 +226,39 @@ async def on_message(message):
                     ending = True
                 else:
                     ending = False
+
+
                 while ending is False:
                     time.sleep(1)
-                    await message.channel.send(f"Wil jij nog een kaart?") # probleem is dat hij de message waar hij de content uit haalt niet verandert
-                    # takingcard = message.content.lower()  # communicatie
+                    await message.channel.send(f"Wil jij nog een kaart?") # problem is it nog changing the input in comparison to the start
                     goodinput = False
                     takingcard = await bot.wait_for_message(author=message.author)
-                    while goodinput is False:
+                    while goodinput is False: # checking the input
                         print(message.content)
-                        # await message.channel.send(f"Wil jij een nog een kaart?")
-                        if takingcard == "ja":
+                        if takingcard == "ja": # if answer is yes
                             card = pickcard()
                             total = total + card
                             time.sleep(1)
                             await message.channel.send(f"Jij hebt getrokken {card} /n Je totaal is nu {total}")
                             goodinput = True
-                        elif takingcard == "nee":
+                        elif takingcard == "nee": # if answer is no
                             await message.channel.send(f"Oke.")
                             goodinput = True
-                        else:
+                        else: # if answer is nor 'yes' or 'no'
                             time.sleep(1)
                             await message.channel.send(f"Beantwoord met ja of nee")
                             time.sleep(3)
                             goodinput = False
-                    if total >= 21:
+                    if total >= 21: # if user has 21, game goes to endingstage
                         ending = True
                     else:
                         ending = False
+
+
+                    # everything under here needs to get out of the 'if ending is false' loop
                     winnerchosen = False
-                    global computertotal
-                    card1computer = compcards[0]
+                    global computertotal # same as earlier
+                    card1computer = compcards[0] # getting the cards out of the list made earlier
                     card2computer = compcards[1]
                     computertotal = card1computer + card2computer
                     time.sleep(1)

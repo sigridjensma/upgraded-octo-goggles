@@ -18,3 +18,6 @@ into your browser.
 **WARNING**
 This code is not yet fully functional. I tried a lot, but did not get to finish in time.
 Everything that still needs work on, is in Dutch comments.
+The 'wait_for_message' in line 95 was a main problem. I've tried a lot of different solutions, but it did not seem to work,
+or I did not know how to use that bit of code in my own code. It is a big shame, because I would've loved if it would've 
+worked.

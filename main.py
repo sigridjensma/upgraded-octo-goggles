@@ -23,6 +23,13 @@ def pickcard():  # function to draw cards.
 
 
 @client.event
+async def message_check(ctx):
+    def check(m: discord.Message):
+        return m.author.id == ctx.author.id and m.channel.id == ctx.channel.id
+
+
+
+@client.event
 async def on_message(message):
     # global repeat  # is only necessary when the repeat function is working
     if message.author == client.user:  # if author of the message is the bot, it does not need to reply
@@ -85,7 +92,7 @@ async def on_message(message):
                         await message.channel.send(f"Wil jij nog een kaart?")  # probleem is dat hij voor onderstaande
                         # invoercorrectie de /play command gebruikt waarmee de code wordt aangeroepen.
                         goodinput = False
-                        takingcard = await bot.wait_for_message(author=message.author)  # deze werkt niet. Hiet zit ook
+                        takingcard = bot.wait_for('message', author=message.author)  # deze werkt niet. Hiet zit ook
                         # het probleem van de code, aangezien dit het punt is dat de code vastloopt. Hij moet wachten
                         # met verdergaan, omdat hij anders dus de /play command gaat gebruiken. ik krijg dit niet voor
                         # elkaar
@@ -164,23 +171,23 @@ async def on_message(message):
                         await message.channel.send(f"Jammer, je hebt verloren.")
                     repeat = False
                     time.sleep(1)
-                    # await message.channel.send(f"Wil je nog een potje spelen? ja of nee") # start of repeat function
-                    # inactive for now
-                    # message2 = message.content.lower
-                    # goodinput = False
-                    # while goodinput is False:
-                    #     if message2 == "ja":
-                    #         repeat = True
-                    #         goodinput = True
-                    #     elif message2 == "nee":
-                    #         repeat = False
-                    #         time.sleep(1)
-                    #         await message.channel.send(f"Tot ziens")
-                    #         goodinput = True
-                    #     else:
-                    #         time.sleep(1)
-                    #         await message.channel.send(f"'ja' of 'nee' alsjeblieft.")
-                    #         goodinput = False
+                    await message.channel.send(f"Wil je nog een potje spelen? ja of nee") # start of repeat function
+                    #inactive for now
+                    message2 = message.content.lower
+                    goodinput = False
+                    while goodinput is False:
+                        if message2 == "ja":
+                            repeat = True
+                            goodinput = True
+                        elif message2 == "nee":
+                            repeat = False
+                            time.sleep(1)
+                            await message.channel.send(f"Tot ziens")
+                            goodinput = True
+                        else:
+                            time.sleep(1)
+                            await message.channel.send(f"'ja' of 'nee' alsjeblieft.")
+                            goodinput = False
                     gameactive = False
 
 

@@ -5,38 +5,27 @@ import os
 import discord
 import random
 import time
-
-
 # global repeat #  is only necessary when the repeat function is working
 
 
 intents = discord.Intents.default()
-# intents.typing = False
 intents.presences = False
 intents.message_content = True
 client = discord.Client(intents=intents)
 
 
-@client.event   # guild count
-async def on_ready():
-    guild_count = 0
-    for guild in client.guilds:
-        print(f"- {guild.id} (name: {guild.name})")
-        guild_count = guild_count + 1
-    print("Jack Black is in " + str(guild_count) + " guilds.")
-
-
-def pickcard(): # function to draw cards.
+def pickcard():  # function to draw cards.
     global deck
     x = random.randint(0, (len(deck) - 1))
     card = deck[x]
-    deck.pop(x) # prevents drawing the same card twice
+    deck.pop(x)  # prevents drawing the same card twice
     return card
 
 
 @client.event
 async def on_message(message):
-    if message.author == client.user: # if author of the message is the bot, it does not need to reply
+    # global repeat  # is only necessary when the repeat function is working
+    if message.author == client.user:  # if author of the message is the bot, it does not need to reply
         return
     else:
         msg = message.content
@@ -50,7 +39,7 @@ async def on_message(message):
                 else:
                     # this line is the correct line for the game
                     await message.channel.send(f"Oke {message.author}, je wilt blackjacken.")
-                    global deck  # unables you to take double cards
+                    global deck  # prevents taking double cards
                     deck = [2, 2, 2, 2,
                             3, 3, 3, 3,
                             4, 4, 4, 4,
@@ -96,9 +85,10 @@ async def on_message(message):
                         await message.channel.send(f"Wil jij nog een kaart?")  # probleem is dat hij voor onderstaande
                         # invoercorrectie de /play command gebruikt waarmee de code wordt aangeroepen.
                         goodinput = False
-                        takingcard = await bot.wait_for_message(author=message.author)  # deze werkt niet. Hiet zit ook het
-                        # probleem van de code, aangezien dit het punt is dat de code vastloopt. Hij moet wachten met ver
-                        # dergaan, omdat hij anders dus de /play command gaat gebruiken. ik krijg dit niet voor elkaar
+                        takingcard = await bot.wait_for_message(author=message.author)  # deze werkt niet. Hiet zit ook
+                        # het probleem van de code, aangezien dit het punt is dat de code vastloopt. Hij moet wachten
+                        # met verdergaan, omdat hij anders dus de /play command gaat gebruiken. ik krijg dit niet voor
+                        # elkaar
                         while goodinput is False:  # checking the input
                             print(message.content)
                             if takingcard == "ja":  # if answer is yes
@@ -174,7 +164,8 @@ async def on_message(message):
                         await message.channel.send(f"Jammer, je hebt verloren.")
                     repeat = False
                     time.sleep(1)
-                    # await message.channel.send(f"Wil je nog een potje spelen? ja of nee") # start of repeat function inactive for now
+                    # await message.channel.send(f"Wil je nog een potje spelen? ja of nee") # start of repeat function
+                    # inactive for now
                     # message2 = message.content.lower
                     # goodinput = False
                     # while goodinput is False:

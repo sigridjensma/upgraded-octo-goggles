@@ -15,25 +15,6 @@ https://discord.com/api/oauth2/authorize?client_id=1150803300241903786&permissio
 into your browser.
 
 WARNING
-This code is not yet functional.
-
-moscow methode:
-must have: 
-- De commands die hierboven staan aangegeven moeten werken (done)
-- een manier om te reageren op de commands (done)
-- Een goed profile om te laten zien waar deze discord bot voor is 
-- Werkende communicatie 
-should have: 
-- een 'wil je nog een keer spelen functie'
-- invoercorrectie (done)
-- dat het niet uitmaakt of je hoofdletters of niet gebruikt (done)
-- een beschrijving hoe je hem to moet voegen aan je discord server (done)
-- 
-could have: 
-- (een functie waar je met meer dan 1 speler kan spelen) 
-- of dat hij nog een ander spelletje kan spelen,
-- dat je een aas als 1 of 11 kan spelen
-won't have: 
-- functies buiten spelletjes spelen
+This code is not yet functional. I tried a lot, but did not get to finish in time.
 
 ( 1 = computer, 2 = speler)
